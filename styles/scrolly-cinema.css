@@ -1,0 +1,493 @@
+/* ==========================================================================
+   Velvet Brew Coffee Roasters & Cafe // Ultra-Premium Scrollytelling Cinema
+   Architecture: Pinned Canvas Stage + GSAP Inertia Scrub + Multi-Scene Camera Voyage
+   Standard: Apple Product Showcase & Awwwards Site of the Year Standard
+   ========================================================================== */
+
+/* The Scroll Track */
+.cinema-scrolly-container {
+  position: relative;
+  width: 100%;
+  height: 320vh; /* Perfectly balanced 3.2 viewports of smooth cinematic travel */
+  background-color: #0E0A08;
+  color: #FAF6F0;
+}
+
+/* Pinned Sticky Stage (Fixed 100vh Viewport) */
+.cinema-stage-sticky {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: #0E0A08;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Master HTML5 Rendering Canvas */
+#cinema-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Cinematic Vignette & Optical Depth Overlay */
+.cinema-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(14, 10, 8, 0.12) 0%,
+    rgba(14, 10, 8, 0.42) 55%,
+    rgba(14, 10, 8, 0.85) 100%
+  );
+  box-shadow: inset 0 0 120px rgba(14, 10, 8, 0.8);
+}
+
+/* ==========================================================================
+   Synchronized Floating Editorial Typography Layers
+   ========================================================================== */
+.cinema-captions-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  padding: clamp(24px, 4vw, 56px);
+  padding-top: calc(var(--header-height) + 36px);
+  padding-bottom: 48px;
+}
+
+.cinema-chapter {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 680px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px) scale(0.98);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.45s;
+  will-change: transform, opacity;
+
+  /* 100% Transparent Architecture: Art Breathes Unobstructed */
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.cinema-chapter.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.cinema-chapter a,
+.cinema-chapter button,
+.cinema-chapter .spec-pill {
+  pointer-events: auto;
+}
+
+/* Chapter 1: Left Aligned, Warm Roast */
+.cinema-chapter[data-chapter="1"] {
+  align-self: center;
+  justify-self: start;
+  margin-left: clamp(20px, 5vw, 80px);
+}
+
+/* Chapter 2: Right Aligned, Precision Bloom */
+.cinema-chapter[data-chapter="2"] {
+  align-self: center;
+  justify-self: end;
+  margin-right: clamp(120px, 15vw, 220px);
+  text-align: right;
+}
+.cinema-chapter[data-chapter="2"] .chapter-specs {
+  justify-content: flex-end;
+}
+
+/* Chapter 3: Left Aligned, Sourdough Hearth */
+.cinema-chapter[data-chapter="3"] {
+  align-self: center;
+  justify-self: start;
+  margin-left: clamp(20px, 5vw, 80px);
+}
+
+/* Chapter 4: Centered Grand Finale Sanctuary */
+.cinema-chapter[data-chapter="4"] {
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+  pointer-events: auto; /* Allow clicking CTAs */
+}
+.cinema-chapter[data-chapter="4"] .chapter-specs {
+  justify-content: center;
+}
+
+/* Chapter Typography Styles */
+.chapter-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #E29B47; /* High-contrast golden amber */
+  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95), 0 4px 14px rgba(0, 0, 0, 0.9);
+}
+.chapter-kicker::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background-color: #E29B47;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+.cinema-chapter[data-chapter="2"] .chapter-kicker::before {
+  display: none;
+}
+.cinema-chapter[data-chapter="2"] .chapter-kicker::after {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background-color: #E29B47;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.chapter-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 4.8vw, 3.8rem);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  color: #FFFFFF; /* Pure white for max legibility */
+  margin-bottom: 20px;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.95),
+    0 6px 18px rgba(0, 0, 0, 0.95),
+    0 12px 36px rgba(0, 0, 0, 0.9),
+    0 20px 50px rgba(0, 0, 0, 0.85);
+}
+.chapter-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: #F8E2BE; /* Bright pale gold */
+}
+
+.chapter-desc {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.25vw, 1.14rem);
+  font-weight: 500;
+  line-height: 1.7;
+  color: #FAF6F0; /* Bright ivory */
+  margin-bottom: 26px;
+  max-width: 580px;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.95),
+    0 4px 14px rgba(0, 0, 0, 0.9),
+    0 8px 24px rgba(0, 0, 0, 0.85);
+}
+.cinema-chapter[data-chapter="4"] .chapter-desc {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 620px;
+}
+
+/* Glassmorphic Telemetry Badges */
+.chapter-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px; /* Uncompromising 28px separation to prevent any overlap */
+}
+.spec-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(26, 18, 14, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 141, 59, 0.45);
+  border-radius: 9999px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+}
+.spec-pill .pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #E29B47;
+  box-shadow: 0 0 8px #E29B47;
+}
+
+/* Chapter 4 Action Hub */
+.chapter-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 6px; /* Generous breathing room */
+}
+.btn-cinema-gold {
+  background: linear-gradient(135deg, #D48D3B 0%, #B67123 100%);
+  color: #16100C;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(212, 141, 59, 0.35);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-cinema-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(212, 141, 59, 0.5);
+}
+.btn-cinema-outline {
+  background: rgba(26, 18, 14, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(212, 141, 59, 0.5);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+.btn-cinema-outline:hover {
+  background: rgba(212, 141, 59, 0.25);
+  border-color: #E29B47;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   HUD & Controls Overlay
+   ========================================================================== */
+.cinema-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  padding: clamp(20px, 3.5vw, 44px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Right Vertical Chapter Telemetry HUD */
+.hud-telemetry {
+  position: absolute;
+  right: clamp(20px, 3.5vw, 44px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+}
+.telemetry-track {
+  position: relative;
+  width: 2px;
+  height: 180px;
+  background: rgba(250, 246, 240, 0.15);
+  border-radius: 2px;
+  margin-right: 18px;
+}
+.telemetry-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: #D48D3B;
+  box-shadow: 0 0 10px #D48D3B;
+  border-radius: 2px;
+  transition: height 0.1s linear;
+}
+.telemetry-nodes {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.telemetry-node {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  color: rgba(250, 246, 240, 0.4);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.25s, transform 0.25s;
+}
+.telemetry-node:hover {
+  color: rgba(250, 246, 240, 0.85);
+  transform: translateX(-4px);
+}
+.telemetry-node.active {
+  color: #D48D3B;
+  transform: translateX(-4px);
+}
+.telemetry-node-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid rgba(250, 246, 240, 0.4);
+  background: #16100C;
+  transition: all 0.25s;
+}
+.telemetry-node.active .telemetry-node-dot {
+  border-color: #D48D3B;
+  background: #D48D3B;
+  box-shadow: 0 0 10px #D48D3B;
+}
+
+/* Bottom Bar (Clean) */
+.hud-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Mobile & Responsive Adjustments
+   ========================================================================== */
+@media (max-width: 900px) {
+  .cinema-captions-layer {
+    padding: 24px;
+  }
+  .cinema-chapter[data-chapter="1"],
+  .cinema-chapter[data-chapter="2"],
+  .cinema-chapter[data-chapter="3"] {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    text-align: left;
+    justify-self: center;
+  }
+  .cinema-chapter[data-chapter="2"] .chapter-specs {
+    justify-content: flex-start;
+  }
+  .hud-telemetry {
+    display: none; /* Hide complex telemetry on mobile screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .chapter-title {
+    font-size: 2.1rem;
+  }
+  .chapter-desc {
+    font-size: 0.95rem;
+  }
+  .chapter-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-cinema-gold,
+  .btn-cinema-outline {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   Adaptive Transparent Header Over Dark Cinema Section
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.site-header.theme-dark {
+  background-color: rgba(14, 10, 8, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(212, 141, 59, 0.2);
+}
+
+.site-header.theme-dark .nav-brand .brand-name {
+  color: #FAF6F0;
+}
+.site-header.theme-dark .nav-brand .brand-sub {
+  color: #D48D3B;
+}
+.site-header.theme-dark .nav-link {
+  color: rgba(250, 246, 240, 0.8);
+}
+.site-header.theme-dark .nav-link:hover,
+.site-header.theme-dark .nav-link.active {
+  color: #D48D3B;
+}
+.site-header.theme-dark .btn-outline {
+  border-color: rgba(250, 246, 240, 0.28);
+  color: #FAF6F0;
+  background: rgba(250, 246, 240, 0.05);
+}
+.site-header.theme-dark .btn-outline:hover {
+  border-color: #D48D3B;
+  color: #D48D3B;
+}
+.site-header.theme-dark .cart-trigger-btn {
+  background: rgba(250, 246, 240, 0.1);
+  border-color: rgba(250, 246, 240, 0.2);
+  color: #FAF6F0;
+}
