@@ -1,14 +1,16 @@
-# ☕ Velvet Brew // Coffee Roasters & Cafe, Dhaka
+# ☕ Velvet Brew // Coffee Roasters & Cafe, Banani, Dhaka
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Cloudflare_Edge-orange?style=for-the-badge&logo=cloudflare)](https://velvet-brew.velvet-brew.workers.dev/)
-[![Performance](https://img.shields.io/badge/60_FPS-Hardware_Accelerated-success?style=for-the-badge)](https://velvet-brew.velvet-brew.workers.dev/)
-[![Stack](https://img.shields.io/badge/Vanilla_JS-ES_Modules-yellow?style=for-the-badge&logo=javascript)](https://velvet-brew.velvet-brew.workers.dev/)
-[![Design](https://img.shields.io/badge/Aesthetic-Deep_Espresso_Noir-8B5A2B?style=for-the-badge)](https://velvet-brew.velvet-brew.workers.dev/)
+[![Live Edge](https://img.shields.io/badge/Live_Deployment-Cloudflare_Workers-orange?style=for-the-badge&logo=cloudflare)](https://velvet-brew.sarkerdipto107.workers.dev/)
+[![Performance](https://img.shields.io/badge/60_FPS-Hardware_Accelerated-success?style=for-the-badge)](https://velvet-brew.sarkerdipto107.workers.dev/)
+[![Stack](https://img.shields.io/badge/Vanilla_JS-ES_Modules-yellow?style=for-the-badge&logo=javascript)](https://velvet-brew.sarkerdipto107.workers.dev/)
+[![Design](https://img.shields.io/badge/Aesthetic-Deep_Espresso_Noir-8B5A2B?style=for-the-badge)](https://velvet-brew.sarkerdipto107.workers.dev/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
-An award-class, bespoke scrollytelling web experience crafted for **Velvet Brew Coffee Roasters & Cafe** in Banani, Dhaka. Built with a decoupled 60 FPS HTML5 Canvas engine, zero-box optical typography, unified dark luxury aesthetics, next-gen WebP image pipeline, and rich real-world interactive capabilities.
+An award-class, bespoke scrollytelling web experience crafted for **Velvet Brew Coffee Roasters & Cafe** on Road 11, Banani, Dhaka. Built with a decoupled 60 FPS HTML5 Canvas engine, zero-box optical typography, unified dark luxury aesthetics, next-gen WebP asset pipeline, Google Gemini Pro bespoke photography, and rich real-world interactive capabilities.
 
-🔗 **Production Live Site:** **[https://velvet-brew.velvet-brew.workers.dev/](https://velvet-brew.velvet-brew.workers.dev/)**
+🔗 **Production Live Sites:**
+* **Primary Cloudflare Worker:** **[https://velvet-brew.sarkerdipto107.workers.dev/](https://velvet-brew.sarkerdipto107.workers.dev/)**
+* **Secondary Mirror:** **[https://velvet-brew.velvet-brew.workers.dev/](https://velvet-brew.velvet-brew.workers.dev/)**
 
 ---
 
@@ -95,7 +97,7 @@ To run this project locally on your machine:
 
 3. **Open in your browser:**
    ```text
-   http://localhost:3458
+   http://localhost:3000
    ```
 
 ---
@@ -104,7 +106,8 @@ To run this project locally on your machine:
 
 This project is deployed to the **Cloudflare Global Edge Network**:
 
-* **Live URL:** [https://velvet-brew.velvet-brew.workers.dev/](https://velvet-brew.velvet-brew.workers.dev/)
+* **Live URL (Primary):** [https://velvet-brew.sarkerdipto107.workers.dev/](https://velvet-brew.sarkerdipto107.workers.dev/)
+* **Live Mirror:** [https://velvet-brew.velvet-brew.workers.dev/](https://velvet-brew.velvet-brew.workers.dev/)
 * **Status:** 24/7 Always Active • 0 Console Errors • Global CDN Caching
 
 ---

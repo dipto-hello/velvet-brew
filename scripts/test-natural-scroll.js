@@ -5,7 +5,8 @@ const { chromium } = requireDynamic('C:/nvm4w/nodejs/node_modules/playwright');
 (async () => {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
-  await page.goto('http://localhost:3458/?run=' + Date.now());
+  const targetUrl = process.env.TARGET_URL || 'http://localhost:3000';
+  await page.goto(targetUrl + (targetUrl.includes('?') ? '&' : '?') + 'run=' + Date.now());
   await page.waitForTimeout(1000);
 
   console.log('--- Starting Continuous Smooth Scroll from 0 to 3500px ---');

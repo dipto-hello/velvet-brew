@@ -7,7 +7,8 @@ const { chromium } = requireDynamic('C:/nvm4w/nodejs/node_modules/playwright');
 
   async function benchmarkFresh(setupFn, label) {
     const page = await browser.newPage();
-    await page.goto('http://localhost:3458/?t=' + Date.now());
+    const targetUrl = process.env.TARGET_URL || 'http://localhost:3000';
+    await page.goto(targetUrl + (targetUrl.includes('?') ? '&' : '?') + 't=' + Date.now());
     await page.waitForTimeout(400);
 
     if (setupFn) {
