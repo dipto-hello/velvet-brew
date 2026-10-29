@@ -137,8 +137,8 @@ async function runAudit() {
   assert(!isDialogOpen, 'Reservation dialog should close on Escape');
   console.log('✓ Reservation modal Escape dismissal verified.');
 
-  // Re-open and submit form
-  await page.click('#hero-reserve-btn');
+  // Re-open and submit form via nav reserve CTA
+  await page.click('#nav-reserve-btn');
   await page.waitForTimeout(150);
   await page.fill('#res-name', 'Elena Vance');
   await page.fill('#res-phone', '+1 (555) 987-6543');

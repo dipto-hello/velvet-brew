@@ -361,6 +361,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // 3b. Wire Spotlight Barista Roast CTA
+  document.getElementById('spotlight-cortado-btn')?.addEventListener('click', () => {
+    const cortado = MENU_ITEMS.find(item => item.id === 'coffee-01');
+    if (cortado) {
+      cart.addItem(cortado);
+      openCartDrawer();
+      showToast('Added Classic Spanish Cortado to your order!', '☕');
+    }
+  });
+
   // 4. Wire Cart Drawer
   document.getElementById('cart-trigger-btn')?.addEventListener('click', openCartDrawer);
   document.getElementById('cart-close-btn')?.addEventListener('click', closeCartDrawer);
