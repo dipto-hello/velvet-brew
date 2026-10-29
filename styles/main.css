@@ -91,17 +91,19 @@ button, input, select {
    Header & Sticky Navigation
    ========================================================================== */
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 100;
-  background-color: rgba(14, 10, 8, 0.85);
+  background-color: rgba(14, 10, 8, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(212, 141, 59, 0.22);
   height: var(--header-height);
   display: flex;
   align-items: center;
-  transition: all var(--transition-fast);
+  transform: translateZ(0);
 }
 
 .site-header .nav-brand .brand-name {
@@ -357,6 +359,7 @@ button, input, select {
   align-items: center;
   background-color: var(--bg-dark-espresso);
   color: #FAF6F0;
+  contain: layout style;
 }
 
 .hero-ambient-container {
@@ -365,104 +368,66 @@ button, input, select {
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
+  contain: strict;
 }
 
 .ambient-slide {
   position: absolute;
-  inset: -6%;
+  inset: 0;
   background-size: cover;
   background-position: center;
   opacity: 0;
-  will-change: transform, opacity;
+  transform: scale(1.04);
   backface-visibility: hidden;
-  transform: scale(1.0) translate3d(0, 0, 0);
-  animation-duration: 21s;
+  animation-duration: 24s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
+  will-change: opacity;
 }
 
-/* 3-Slide Continuous Cross-Fade & Ken Burns Animation */
+/* 3-Slide Continuous Clean GPU Cross-Fade */
 .ambient-slide.slide-1 {
-  animation-name: kenBurnsSlide1;
+  animation-name: ambientCrossFade1;
 }
 
 .ambient-slide.slide-2 {
-  animation-name: kenBurnsSlide2;
+  animation-name: ambientCrossFade2;
 }
 
 .ambient-slide.slide-3 {
-  animation-name: kenBurnsSlide3;
+  animation-name: ambientCrossFade3;
 }
 
-@keyframes kenBurnsSlide1 {
-  0% {
-    opacity: 0;
-    transform: scale(1.0) translate3d(0, 0, 0);
-  }
-  5% {
-    opacity: 0.92;
-  }
-  30% {
-    opacity: 0.92;
-    transform: scale(1.08) translate3d(-1%, -1%, 0);
-  }
-  38% {
-    opacity: 0;
-    transform: scale(1.11) translate3d(-1.5%, -1.5%, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.0);
-  }
+@keyframes ambientCrossFade1 {
+  0% { opacity: 0; }
+  6% { opacity: 0.90; }
+  32% { opacity: 0.90; }
+  38% { opacity: 0; }
+  100% { opacity: 0; }
 }
 
-@keyframes kenBurnsSlide2 {
-  0%, 30% {
-    opacity: 0;
-    transform: scale(1.0) translate3d(0, 0, 0);
-  }
-  36% {
-    opacity: 0.92;
-  }
-  63% {
-    opacity: 0.92;
-    transform: scale(1.08) translate3d(1%, -1%, 0);
-  }
-  71% {
-    opacity: 0;
-    transform: scale(1.11) translate3d(1.5%, -1.5%, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.0);
-  }
+@keyframes ambientCrossFade2 {
+  0%, 32% { opacity: 0; }
+  38% { opacity: 0.90; }
+  64% { opacity: 0.90; }
+  70% { opacity: 0; }
+  100% { opacity: 0; }
 }
 
-@keyframes kenBurnsSlide3 {
-  0%, 63% {
-    opacity: 0;
-    transform: scale(1.0) translate3d(0, 0, 0);
-  }
-  69% {
-    opacity: 0.92;
-  }
-  94% {
-    opacity: 0.92;
-    transform: scale(1.08) translate3d(0, 1%, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.11) translate3d(0, 1.5%, 0);
-  }
+@keyframes ambientCrossFade3 {
+  0%, 64% { opacity: 0; }
+  70% { opacity: 0.90; }
+  94% { opacity: 0.90; }
+  100% { opacity: 0; }
 }
 
-/* Atmospheric Vignette & Film Overlay (Ensures WCAG AAA contrast for text) */
+/* Atmospheric Vignette & Film Overlay (Deep gradient, Zero blur readback overhead) */
 .ambient-vignette-overlay {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: radial-gradient(circle at 75% 35%, rgba(22, 16, 12, 0.42) 0%, rgba(22, 16, 12, 0.78) 55%, rgba(17, 12, 9, 0.92) 100%);
-  backdrop-filter: blur(0.5px);
+  background: radial-gradient(circle at 75% 35%, rgba(22, 16, 12, 0.42) 0%, rgba(22, 16, 12, 0.78) 55%, rgba(17, 12, 9, 0.95) 100%);
+  pointer-events: none;
 }
 
 .hero-container {
@@ -1591,6 +1556,7 @@ button, input, select {
   font-size: 0.88rem;
   position: relative;
   z-index: 10;
+  contain: layout style;
 }
 
 .roast-ticker-content {

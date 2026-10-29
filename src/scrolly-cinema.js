@@ -47,6 +47,25 @@
     alpha: Math.random() * 0.45 + 0.2
   }));
 
+  // Master 60 FPS Visibility & Execution State
+  let isIntersecting = true;
+  let isLoopRunning = false;
+  let cachedContainerTop = 0;
+  let cachedTotalDistance = 1;
+
+  function measureContainer() {
+    if (!container) return;
+    cachedContainerTop = container.offsetTop;
+    cachedTotalDistance = Math.max(1, container.offsetHeight - window.innerHeight);
+  }
+
+  function startRenderLoop() {
+    if (!isLoopRunning && state.imagesLoaded) {
+      isLoopRunning = true;
+      requestAnimationFrame(renderLoop);
+    }
+  }
+
   /**
    * Preload all cinematic assets into memory before drawing (WebP with JPG fallback)
    */
@@ -69,7 +88,7 @@
     ).then((loadedImgs) => {
       state.images = loadedImgs;
       state.imagesLoaded = true;
-      requestAnimationFrame(renderLoop);
+      startRenderLoop();
     });
   }
 
@@ -84,18 +103,20 @@
     ctx.scale(dpr, dpr);
   }
 
+  function onResize() {
+    measureContainer();
+    resizeCanvas();
+    updateScrollProgress();
+  }
+
   /**
-   * Passive Native Scroll Tracking (Zero main-thread blocking)
+   * Passive Native Scroll Tracking (Zero Layout Thrashing, Cached Bounds)
    */
   function updateScrollProgress() {
     if (!container) return;
-    const containerTop = container.offsetTop;
-    const totalDistance = container.offsetHeight - window.innerHeight;
-    if (totalDistance <= 0) return;
-
     const scrollY = window.scrollY;
-    const scrollRel = Math.max(0, scrollY - containerTop);
-    state.targetProgress = Math.min(1, Math.max(0, scrollRel / totalDistance));
+    const scrollRel = Math.max(0, scrollY - cachedContainerTop);
+    state.targetProgress = Math.min(1, Math.max(0, scrollRel / cachedTotalDistance));
   }
 
   /**
@@ -183,28 +204,16 @@
     if (telemetryFill) {
       telemetryFill.style.height = `${(p * 100).toFixed(1)}%`;
     }
-
-    // 3. Header Dark / Light Adaptive Switch (Physical container collision)
-    const containerRect = container ? container.getBoundingClientRect() : { bottom: 0 };
-    const shouldBeDark = containerRect.bottom > 72;
-    if (siteHeader) {
-      const hasDarkClass = siteHeader.classList.contains('theme-dark');
-      if (shouldBeDark && !hasDarkClass) {
-        siteHeader.classList.add('theme-dark');
-        state.headerIsDark = true;
-      } else if (!shouldBeDark && hasDarkClass) {
-        siteHeader.classList.remove('theme-dark');
-        state.headerIsDark = false;
-      }
-    }
-
-    // 4. Scroll Cue Removed (Cleaned)
   }
 
   /**
-   * Master 60 FPS Render Loop
+   * Master 60 FPS Render Loop (Zero Overhead When Offscreen)
    */
   function renderLoop() {
+    if (!isIntersecting) {
+      isLoopRunning = false;
+      return; // Pause RAF immediately when scrolled out of view!
+    }
     // Responsive Kinetic Lerp (0.16 gives instant pickup without lag)
     const diff = state.targetProgress - state.currentProgress;
     if (Math.abs(diff) < 0.0004) {
@@ -339,18 +348,31 @@
     telemetryFill = document.querySelector('.telemetry-progress-fill');
     siteHeader = document.querySelector('.site-header');
 
-    // Guarantee dark header on startup if over cinema stage
+    // Guarantee permanently dark header on startup
     if (siteHeader) {
-      const containerRect = container.getBoundingClientRect();
-      if (containerRect.bottom > 72) {
-        siteHeader.classList.add('theme-dark');
-        state.headerIsDark = true;
-      }
+      siteHeader.classList.add('theme-dark');
+      state.headerIsDark = true;
     }
 
-    // Initial setup
+    // Measure container bounds once
+    measureContainer();
+
+    // Initial canvas setup
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
+
+    // IntersectionObserver: automatically sleep render loop when scrolled offscreen
+    if ('IntersectionObserver' in window) {
+      const cinemaObserver = new IntersectionObserver((entries) => {
+        for (let i = 0; i < entries.length; i++) {
+          isIntersecting = entries[i].isIntersecting;
+          if (isIntersecting) {
+            startRenderLoop();
+          }
+        }
+      }, { rootMargin: '100px 0px 100px 0px' });
+      cinemaObserver.observe(container);
+    }
 
     // Passive scroll listener (Hardware-accelerated)
     window.addEventListener('scroll', updateScrollProgress, { passive: true });
