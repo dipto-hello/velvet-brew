@@ -10,7 +10,7 @@ An award-class, bespoke scrollytelling web experience crafted for **Velvet Brew 
 
 🔗 **Production Live Sites:**
 * **Primary Cloudflare Worker:** **[https://velvet-brew.sarkerdipto107.workers.dev/](https://velvet-brew.sarkerdipto107.workers.dev/)**
-* **Secondary Mirror:** **[https://velvet-brew.velvet-brew.workers.dev/](https://velvet-brew.velvet-brew.workers.dev/)**
+* **GitHub Pages Live Mirror:** **[https://dipto-hello.github.io/velvet-brew/](https://dipto-hello.github.io/velvet-brew/)**
 
 ---
 
@@ -104,10 +104,10 @@ To run this project locally on your machine:
 
 ## 🌐 Live Production Deployment
 
-This project is deployed to the **Cloudflare Global Edge Network**:
+This project is continuously deployed to production edge networks:
 
-* **Live URL (Primary):** [https://velvet-brew.sarkerdipto107.workers.dev/](https://velvet-brew.sarkerdipto107.workers.dev/)
-* **Live Mirror:** [https://velvet-brew.velvet-brew.workers.dev/](https://velvet-brew.velvet-brew.workers.dev/)
+* **Production URL (Cloudflare Workers):** [https://velvet-brew.sarkerdipto107.workers.dev/](https://velvet-brew.sarkerdipto107.workers.dev/)
+* **Alternative Live Mirror (GitHub Pages):** [https://dipto-hello.github.io/velvet-brew/](https://dipto-hello.github.io/velvet-brew/)
 * **Status:** 24/7 Always Active • 0 Console Errors • Global CDN Caching
 
 ---
