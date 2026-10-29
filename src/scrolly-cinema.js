@@ -116,7 +116,15 @@
     if (!container) return;
     const scrollY = window.scrollY;
     const scrollRel = Math.max(0, scrollY - cachedContainerTop);
-    state.targetProgress = Math.min(1, Math.max(0, scrollRel / cachedTotalDistance));
+    const newProgress = Math.min(1, Math.max(0, scrollRel / cachedTotalDistance));
+    
+    // If scrolling back into active cinema zone, wake up render loop immediately
+    if (newProgress < 1.0 || scrollY <= (cachedContainerTop + cachedTotalDistance + 20)) {
+      if (!isLoopRunning && isIntersecting) {
+        startRenderLoop();
+      }
+    }
+    state.targetProgress = newProgress;
   }
 
   /**
@@ -200,9 +208,9 @@
       }
     }
 
-    // 2. Telemetry Progress Fill
+    // 2. Telemetry Progress Fill (GPU scaleY - Zero Layout Reflow)
     if (telemetryFill) {
-      telemetryFill.style.height = `${(p * 100).toFixed(1)}%`;
+      telemetryFill.style.transform = `scaleY(${p.toFixed(3)})`;
     }
   }
 
@@ -213,6 +221,12 @@
     if (!isIntersecting) {
       isLoopRunning = false;
       return; // Pause RAF immediately when scrolled out of view!
+    }
+
+    // If cinema is finished and user is scrolled down into hero/menu, sleep the loop to save 100% GPU
+    if (state.currentProgress >= 0.999 && window.scrollY >= (cachedContainerTop + cachedTotalDistance + 40)) {
+      isLoopRunning = false;
+      return;
     }
     // Responsive Kinetic Lerp (0.16 gives instant pickup without lag)
     const diff = state.targetProgress - state.currentProgress;
