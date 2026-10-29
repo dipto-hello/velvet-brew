@@ -308,6 +308,34 @@
   transform: translateY(-2px);
 }
 
+.chapter-specs-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(250, 246, 240, 0.92);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+}
+
+.chapter-specs-inline .spec-sep {
+  color: #D48D3B;
+  font-size: 1rem;
+}
+
+.btn-svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
 /* ==========================================================================
    HUD & Controls Overlay
    ========================================================================== */

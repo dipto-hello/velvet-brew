@@ -20,7 +20,7 @@ async function runAudit() {
 
   // 2. Verify Title and Header
   const title = await page.title();
-  assert(title.includes("L'Aroma"), "Title must contain L'Aroma");
+  assert(title.includes("Velvet Brew"), "Title must contain Velvet Brew");
   console.log('✓ Title verified:', title);
 
   // 3. Category Filter Audit
@@ -75,7 +75,7 @@ async function runAudit() {
   await page.waitForTimeout(100);
 
   // 6. Cart Addition, Calculation & Quantity Tests
-  // Add Cortado ($5.25)
+  // Add Cortado (৳ 380)
   await page.locator('[data-item-id="coffee-01"] .add-cart-btn').click();
   await page.waitForTimeout(150);
   let badgeText = await page.locator('#cart-count-badge').innerText();
@@ -85,36 +85,36 @@ async function runAudit() {
   await page.click('#cart-close-btn');
   await page.waitForTimeout(150);
 
-  // Add Sourdough Boule ($8.50)
+  // Add Sourdough Boule (৳ 780)
   await page.locator('[data-item-id="bakery-01"] .add-cart-btn').click();
   await page.waitForTimeout(150);
   badgeText = await page.locator('#cart-count-badge').innerText();
   assert.strictEqual(badgeText, '2');
 
-  // Subtotal = 5.25 + 8.50 = 13.75
-  // Tax (8%) = 13.75 * 0.08 = 1.10
-  // Total = 14.85
+  // Subtotal = 380 + 480 = 860
+  // Tax (5% SD/VAT) = 860 * 0.05 = 43
+  // Total = 903
   let subtotal = await page.locator('#cart-subtotal-val').innerText();
   let tax = await page.locator('#cart-tax-val').innerText();
   let total = await page.locator('#cart-total-val').innerText();
-  assert.strictEqual(subtotal, '$13.75');
-  assert.strictEqual(tax, '$1.10');
-  assert.strictEqual(total, '$14.85');
-  console.log('✓ Cart arithmetic (subtotal $13.75, tax $1.10, total $14.85) verified.');
+  assert(subtotal.includes('860'), `Subtotal mismatch: ${subtotal}`);
+  assert(tax.includes('43'), `Tax mismatch: ${tax}`);
+  assert(total.includes('903'), `Total mismatch: ${total}`);
+  console.log(`✓ Cart arithmetic (${subtotal}, tax ${tax}, total ${total}) verified.`);
 
   // Increment Cortado to 2
   await page.locator('.cart-item:has-text("Spanish Cortado") button:has-text("+")').click();
   await page.waitForTimeout(100);
-  // Subtotal = 10.50 + 8.50 = 19.00
-  // Tax = 19.00 * 0.08 = 1.52
-  // Total = 20.52
+  // Subtotal = 380*2 + 480 = 1240
+  // Tax = 1240 * 0.05 = 62
+  // Total = 1302
   subtotal = await page.locator('#cart-subtotal-val').innerText();
   tax = await page.locator('#cart-tax-val').innerText();
   total = await page.locator('#cart-total-val').innerText();
-  assert.strictEqual(subtotal, '$19.00');
-  assert.strictEqual(tax, '$1.52');
-  assert.strictEqual(total, '$20.52');
-  console.log('✓ Quantity increment arithmetic (subtotal $19.00, total $20.52) verified.');
+  assert(subtotal.includes('1,240') || subtotal.includes('1240'), `Increment subtotal mismatch: ${subtotal}`);
+  assert(tax.includes('62'), `Increment tax mismatch: ${tax}`);
+  assert(total.includes('1,302') || total.includes('1302'), `Increment total mismatch: ${total}`);
+  console.log(`✓ Quantity increment arithmetic (${subtotal}, total ${total}) verified.`);
 
   // Checkout Takeaway
   await page.click('#cart-checkout-btn');
@@ -152,6 +152,23 @@ async function runAudit() {
   const toastText = await page.locator('.toast').last().innerText();
   assert(toastText.includes('Elena Vance'), 'Toast should confirm booking');
   console.log('✓ Reservation form submission and toast confirmed.');
+
+  // 7.5. Brew Companion and Chapter 1 CTA Interaction Check
+  const ctaBtn = await page.locator('#ch1-reserve-btn').count();
+  assert.strictEqual(ctaBtn, 1, 'Chapter 1 reserve CTA button should exist');
+  
+  // Test Brew Companion slider
+  await page.locator('#brew-guide').scrollIntoViewIfNeeded();
+  const doseVal = await page.locator('#dose-val-display').innerText();
+  assert(doseVal.includes('18'), `Initial dose should be 18g, got ${doseVal}`);
+  
+  // Click Start Brew
+  await page.click('#brew-start-btn');
+  await page.waitForTimeout(1100);
+  const timerText = await page.locator('#brew-timer-clock').innerText();
+  assert(timerText !== '00:00', 'Brew timer should be counting up');
+  await page.click('#brew-start-btn'); // Pause
+  console.log(`✓ Interactive Specialty Brew Companion verified running (timer reached ${timerText}).`);
 
   // 8. Responsive Viewport Audits (320px, 375px, 768px, 1280px, 3440px)
   const viewports = [

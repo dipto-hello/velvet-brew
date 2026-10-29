@@ -41,15 +41,15 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
 
   <!-- Next-Gen Asset Preloading (Fast LCP & Scrolly Cinema Readiness) -->
-  <link rel="preload" as="image" href="assets/images/cinema-01-beans.webp" type="image/webp" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/images/cinema-02-bloom.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/images/cinema-01-beans.webp?v=32" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/images/cinema-02-bloom.webp?v=32" type="image/webp" fetchpriority="high">
 
   <!-- Fonts Preconnect & Stylesheets -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/main.css?v=28">
-  <link rel="stylesheet" href="styles/scrolly-cinema.css?v=28">
+  <link rel="stylesheet" href="styles/main.css?v=32">
+  <link rel="stylesheet" href="styles/scrolly-cinema.css?v=32">
 
   <!-- Local Business / Cafe Schema (JSON-LD Structured Data) -->
   <script type="application/ld+json">
@@ -122,6 +122,7 @@
       <nav class="nav-links" role="navigation" aria-label="Main Navigation">
         <a href="#journey" class="nav-link">Our Story</a>
         <a href="#menu" class="nav-link">Our Menu</a>
+        <a href="#brew-guide" class="nav-link">Brew Guide</a>
         <a href="#story" class="nav-link">The Roastery</a>
         <a href="#visit" class="nav-link">Hours & Location</a>
       </nav>
@@ -129,12 +130,21 @@
       <!-- Action Buttons -->
       <div class="nav-actions">
         <button class="btn btn-outline" id="nav-reserve-btn" aria-label="Open Table Reservation">
-          <span class="btn-icon">📅</span>
-          <span>Reserve Table</span>
+          <svg class="btn-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span class="nav-btn-text">Reserve Table</span>
         </button>
 
         <button class="cart-trigger-btn" id="cart-trigger-btn" aria-label="View Order Cart">
-          <span class="cart-icon">🛍️</span>
+          <svg class="btn-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
           <span class="cart-label">Order</span>
           <span class="cart-count-badge" id="cart-count-badge">0</span>
         </button>
@@ -154,66 +164,95 @@
           
           <!-- Chapter 1: Coffee Roasting -->
           <article class="cinema-chapter active" data-chapter="1">
-            <span class="chapter-kicker">01 / Coffee Roasting</span>
-            <h2 class="chapter-title">Fresh Roasted Coffee <br><em>Every Morning</em>.</h2>
+            <span class="chapter-kicker">Harvest & Provenance</span>
+            <h2 class="chapter-title">Single-Origin Roast <br><em>Crafted in Banani</em>.</h2>
             <p class="chapter-desc">
-              We roast our coffee beans in small batches every week. Sourced directly from family farms in Colombia, delivering smooth caramel and chocolate notes in every cup.
+              Castillo & Caturra beans sourced directly from family estates in Huila, Colombia (1,850m). Roasted weekly in small batches in Banani, Dhaka to draw out notes of raw panela sugar, dark cacao, and toasted hazelnut.
             </p>
-            <div class="chapter-specs">
-              <span class="spec-pill"><span class="pill-dot"></span>Direct Trade Colombia</span>
-              <span class="spec-pill"><span class="pill-dot"></span>Small-Batch Roast</span>
-              <span class="spec-pill"><span class="pill-dot"></span>Smooth & Balanced</span>
+            <div class="chapter-actions">
+              <a href="#menu" class="btn-cinema-gold">
+                <span>Explore Artisan Menu</span>
+                <span class="cta-arrow">↓</span>
+              </a>
+              <button class="btn-cinema-outline" id="ch1-reserve-btn">
+                <svg class="btn-svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>Reserve a Table</span>
+              </button>
+            </div>
+            <div class="chapter-specs-inline">
+              <span>Direct Trade Huila</span>
+              <span class="spec-sep">•</span>
+              <span>Small-Batch Weekly Roast</span>
+              <span class="spec-sep">•</span>
+              <span>Elevation 1,850m</span>
             </div>
           </article>
 
           <!-- Chapter 2: Handcrafted Brew -->
           <article class="cinema-chapter" data-chapter="2">
-            <span class="chapter-kicker">02 / Handcrafted Brew</span>
-            <h2 class="chapter-title">Handcrafted <br><em>Pour-Over Coffee</em>.</h2>
+            <span class="chapter-kicker">The 94°C Extraction</span>
+            <h2 class="chapter-title">Artisanal Pour-Over <br><em>Slow Hand Brew</em>.</h2>
             <p class="chapter-desc">
-              Every cup is brewed by hand with fresh filtered water. This slow brewing method brings out clean citrus notes, gentle honey sweetness, and a balanced finish.
+              Every cup is hand-poured with mineral-balanced water at 94°C through ceramic Origami drippers. A measured 45-second bloom followed by slow spiral pours yields pristine clarity, jasmine aroma, and gentle honeyed finish.
             </p>
-            <div class="chapter-specs">
-              <span class="spec-pill"><span class="pill-dot"></span>Freshly Ground Beans</span>
-              <span class="spec-pill"><span class="pill-dot"></span>Slow Hand Brew</span>
-              <span class="spec-pill"><span class="pill-dot"></span>Clean & Balanced</span>
+            <div class="chapter-specs-inline">
+              <span>Hario V60 & Origami</span>
+              <span class="spec-sep">•</span>
+              <span>1:16 Golden Brew Ratio</span>
+              <span class="spec-sep">•</span>
+              <span>Precision Extraction</span>
             </div>
           </article>
 
           <!-- Chapter 3: Fresh Bakery -->
           <article class="cinema-chapter" data-chapter="3">
-            <span class="chapter-kicker">03 / Fresh Bakery</span>
-            <h2 class="chapter-title">Fresh Sourdough <br><em>Baked at Dawn</em>.</h2>
+            <span class="chapter-kicker">Hearth & Slow Ferment</span>
+            <h2 class="chapter-title">Stone-Baked Sourdough <br><em>Every Dawn</em>.</h2>
             <p class="chapter-desc">
-              Made with our natural sourdough culture and slow fermented for 36 hours. Baked fresh daily in stone hearth ovens for a golden crispy crust and soft, airy bread.
+              Crafted from our live wild mother culture and slow-fermented for 36 hours. Baked fresh daily in stone hearth ovens for a golden blistered crust and soft, open airy crumb.
             </p>
-            <div class="chapter-specs">
-              <span class="spec-pill"><span class="pill-dot"></span>Natural Sourdough</span>
-              <span class="spec-pill"><span class="pill-dot"></span>Slow 36-Hour Ferment</span>
-              <span class="spec-pill"><span class="pill-dot"></span>Stone Oven Baked</span>
+            <div class="chapter-specs-inline">
+              <span>Wild Yeast Culture</span>
+              <span class="spec-sep">•</span>
+              <span>36-Hour Cold Ferment</span>
+              <span class="spec-sep">•</span>
+              <span>Stone Deck Oven</span>
             </div>
           </article>
 
           <!-- Chapter 4: Warm Atmosphere -->
           <article class="cinema-chapter" data-chapter="4">
-            <span class="chapter-kicker">04 / Warm Atmosphere</span>
-            <h2 class="chapter-title">A Relaxing Space <br><em>for Good Food</em>.</h2>
+            <span class="chapter-kicker">Banani Roastery & Cafe</span>
+            <h2 class="chapter-title">A Welcoming Haven <br><em>On Road 11</em>.</h2>
             <p class="chapter-desc">
-              From your morning coffee and warm croissant to evening meals with friends. A comfortable, welcoming cafe built for great conversations and delicious food.
+              Designed as a calm sanctuary amidst Dhaka’s energy. From morning espresso and warm almond croissants to wholesome bistro plates and evening conversations under ambient amber lighting.
             </p>
-            <div class="chapter-specs">
-              <span class="spec-pill"><span class="pill-dot"></span>Baking Daily at 5:30 AM</span>
-              <span class="spec-pill"><span class="pill-dot"></span>Fresh Local Food</span>
-              <span class="spec-pill"><span class="pill-dot"></span>Open 8:00 AM – 11:00 PM</span>
-            </div>
             <div class="chapter-actions">
               <a href="#menu" class="btn-cinema-gold">
-                <span>Explore Our Menu</span>
-                <span>↓</span>
+                <span>View Full Menu</span>
+                <span class="cta-arrow">↓</span>
               </a>
               <button class="btn-cinema-outline" id="cinema-reserve-btn">
-                <span>📅 Reserve a Table</span>
+                <svg class="btn-svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>Reserve Seating</span>
               </button>
+            </div>
+            <div class="chapter-specs-inline">
+              <span>Baking Daily at 5:30 AM</span>
+              <span class="spec-sep">•</span>
+              <span>Road 11, Banani</span>
+              <span class="spec-sep">•</span>
+              <span>Open 8:00 AM – 11:00 PM</span>
             </div>
           </article>
 
@@ -252,6 +291,15 @@
 
       </div>
     </section>
+
+    <!-- Live Weekly Small-Batch Roast Ticker -->
+    <div class="roast-ticker-bar" role="region" aria-label="Roastery Batch Dispatch Notice">
+      <div class="roast-ticker-content">
+        <span class="ticker-flame">🔥</span>
+        <span class="ticker-text"><strong>Next Small-Batch Roast:</strong> Fresh Castillo & Caturra Lot • Drops Wednesday 9:00 AM in Banani</span>
+        <span class="ticker-pill" id="roast-countdown-pill">Roasting in: <span id="roast-countdown-val">01d : 14h : 22m</span></span>
+      </div>
+    </div>
 
     <!-- Hero Atmospheric Section -->
     <section class="hero-section" aria-labelledby="hero-title">
@@ -312,7 +360,7 @@
             <div class="showcase-info">
               <div class="showcase-title-row">
                 <h3>Classic Spanish Cortado</h3>
-                <span class="showcase-price">$5.25</span>
+                <span class="showcase-price">৳ 380</span>
               </div>
               <p>Smooth double espresso paired with steamed oat milk and a touch of brown sugar.</p>
             </div>
@@ -351,6 +399,124 @@
         <!-- Menu Items Grid -->
         <div class="menu-grid" id="menu-grid-container" aria-live="polite">
           <!-- Dynamically populated via menu-data.js & app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Specialty Brew Guide & Ratio Companion -->
+    <section class="brew-companion-section" id="brew-guide" aria-labelledby="brew-guide-heading">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-kicker">INTERACTIVE BREW COMPANION</span>
+          <h2 class="section-title" id="brew-guide-heading">Master Specialty Pour-Over at Home</h2>
+          <p class="section-subtitle">Dial in your morning cup. Pick your brewing device and dose—our interactive companion calculates the golden 1:16 ratio and guides your extraction step-by-step.</p>
+        </div>
+
+        <div class="brew-card-container">
+          <!-- Left Controls: Method & Dose -->
+          <div class="brew-controls-panel">
+            <h3 class="panel-subtitle">1. Select Brew Method</h3>
+            <div class="brew-method-selector" role="tablist" aria-label="Brew Methods">
+              <button class="brew-method-btn active" data-method="v60" role="tab" aria-selected="true">
+                <span class="method-icon">☕</span>
+                <div class="method-meta">
+                  <span class="method-name">Hario V60</span>
+                  <span class="method-sub">Clean, Floral & Bright</span>
+                </div>
+              </button>
+              <button class="brew-method-btn" data-method="aeropress" role="tab" aria-selected="false">
+                <span class="method-icon">🧪</span>
+                <div class="method-meta">
+                  <span class="method-name">AeroPress</span>
+                  <span class="method-sub">Rich & Full-Bodied</span>
+                </div>
+              </button>
+              <button class="brew-method-btn" data-method="frenchpress" role="tab" aria-selected="false">
+                <span class="method-icon">🫖</span>
+                <div class="method-meta">
+                  <span class="method-name">French Press</span>
+                  <span class="method-sub">Bold, Deep & Textured</span>
+                </div>
+              </button>
+            </div>
+
+            <div class="dose-control-group">
+              <div class="dose-header">
+                <h3 class="panel-subtitle">2. Coffee Dose</h3>
+                <span id="dose-val-display" class="dose-display-badge">18 g</span>
+              </div>
+              <input type="range" id="coffee-dose-slider" min="12" max="36" value="18" step="1" class="custom-range" aria-label="Coffee Dose in Grams">
+              <div class="dose-slider-labels">
+                <span>12g (Solo)</span>
+                <span>18g (Standard Mug)</span>
+                <span>36g (Shared Pot)</span>
+              </div>
+            </div>
+
+            <div class="brew-recipe-metrics">
+              <div class="metric-box">
+                <span class="metric-label">Filtered Water</span>
+                <span class="metric-num" id="water-amount-display">288 ml</span>
+                <span class="metric-sub">at 94°C (Off boil)</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">Grind Size</span>
+                <span class="metric-num" id="grind-size-display">Medium-Fine</span>
+                <span class="metric-sub">Table salt texture</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">Target Time</span>
+                <span class="metric-num" id="target-time-display">2:45 min</span>
+                <span class="metric-sub">Extraction window</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Interactive Live Timer & Step Guide -->
+          <div class="brew-timer-panel">
+            <div class="timer-display-ring">
+              <div class="timer-digits" id="brew-timer-clock">00:00</div>
+              <div class="timer-stage-title" id="brew-stage-name">Ready to Bloom</div>
+              <div class="timer-stage-instruction" id="brew-stage-instruction">Rinse paper filter with hot water, add 18g coffee into your dripper, zero your scale, and press Start Brew.</div>
+              <div class="timer-progress-track">
+                <div class="timer-progress-bar" id="brew-progress-bar" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- Timer Action Buttons -->
+            <div class="timer-actions">
+              <button class="btn btn-primary btn-lg" id="brew-start-btn">
+                <span>Start Brew</span>
+                <span>▶</span>
+              </button>
+              <button class="btn btn-outline" id="brew-reset-btn" disabled>Reset</button>
+            </div>
+
+            <!-- Steps Flow -->
+            <div class="brew-steps-flow" id="brew-steps-flow">
+              <div class="step-chip active" data-step="1">
+                <span class="step-num">1</span>
+                <div class="step-details">
+                  <strong>Bloom</strong>
+                  <span>0:00 - 0:45 (Pour 50g)</span>
+                </div>
+              </div>
+              <div class="step-chip" data-step="2">
+                <span class="step-num">2</span>
+                <div class="step-details">
+                  <strong>First Pour</strong>
+                  <span>0:45 - 1:30 (Pour to 160g)</span>
+                </div>
+              </div>
+              <div class="step-chip" data-step="3">
+                <span class="step-num">3</span>
+                <div class="step-details">
+                  <strong>Final Drawdown</strong>
+                  <span>1:30 - 2:45 (Pour to 288g)</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -484,15 +650,15 @@
     <div class="cart-footer">
       <div class="cart-summary-row">
         <span>Subtotal</span>
-        <span class="cart-subtotal" id="cart-subtotal-val">$0.00</span>
+        <span class="cart-subtotal" id="cart-subtotal-val">৳ 0</span>
       </div>
       <div class="cart-summary-row subtle">
-        <span>Estimated Tax (8%)</span>
-        <span id="cart-tax-val">$0.00</span>
+        <span>SD & VAT (5%)</span>
+        <span id="cart-tax-val">৳ 0</span>
       </div>
       <div class="cart-summary-row total">
         <span>Total Due</span>
-        <span class="cart-total" id="cart-total-val">$0.00</span>
+        <span class="cart-total" id="cart-total-val">৳ 0</span>
       </div>
 
       <button class="btn btn-primary btn-block" id="cart-checkout-btn">Confirm Order (Pickup)</button>
@@ -577,7 +743,7 @@
   <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
   <!-- Scripts -->
-  <script src="src/scrolly-cinema.js?v=28"></script>
-  <script type="module" src="src/app.js?v=28"></script>
+  <script src="src/scrolly-cinema.js?v=32"></script>
+  <script type="module" src="src/app.js?v=32"></script>
 </body>
 </html>

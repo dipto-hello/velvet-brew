@@ -82,15 +82,15 @@ class CartState {
 
     const totalCount = this.getCount();
     const subtotal = this.getSubtotal();
-    const tax = subtotal * 0.08;
+    const tax = Math.round(subtotal * 0.05);
     const total = subtotal + tax;
 
     if (countBadge) countBadge.textContent = totalCount;
     if (itemsCountText) itemsCountText.textContent = `${totalCount} item${totalCount === 1 ? '' : 's'}`;
 
-    if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-    if (taxEl) taxEl.textContent = `$${tax.toFixed(2)}`;
-    if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
+    if (subtotalEl) subtotalEl.textContent = `৳ ${subtotal}`;
+    if (taxEl) taxEl.textContent = `৳ ${tax}`;
+    if (totalEl) totalEl.textContent = `৳ ${total}`;
 
     if (!container) return;
 
@@ -116,7 +116,7 @@ class CartState {
 
       const price = document.createElement('div');
       price.className = 'cart-item-price';
-      price.textContent = `$${(item.price * item.quantity).toFixed(2)}`;
+      price.textContent = `৳ ${item.price * item.quantity}`;
 
       left.appendChild(title);
       left.appendChild(price);
@@ -249,7 +249,7 @@ function renderMenuGrid() {
 
     const price = document.createElement('span');
     price.className = 'menu-card-price';
-    price.textContent = `$${item.price.toFixed(2)}`;
+    price.textContent = `৳ ${item.price}`;
 
     header.appendChild(title);
     header.appendChild(price);
@@ -368,17 +368,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('cart-checkout-btn')?.addEventListener('click', () => {
     if (cart.items.length === 0) {
-      showToast('Please add items to your order first.', 'ℹ️');
+      showToast('Please add items to your order first.', '☕');
       return;
     }
-    const total = (cart.getSubtotal() * 1.08).toFixed(2);
-    showToast(`Order Confirmed for Takeaway! Total: $${total}. Ready in 15 mins.`, '🎉');
+    const total = Math.round(cart.getSubtotal() * 1.05);
+    showToast(`Order Confirmed for Takeaway! Total: ৳ ${total}. Ready in 15 mins.`, '☕');
     cart.clear();
     closeCartDrawer();
   });
 
   // 5. Wire Reservation Modal
   document.getElementById('nav-reserve-btn')?.addEventListener('click', openReservationDialog);
+  document.getElementById('ch1-reserve-btn')?.addEventListener('click', openReservationDialog);
   document.getElementById('hero-reserve-btn')?.addEventListener('click', openReservationDialog);
   document.getElementById('cinema-reserve-btn')?.addEventListener('click', openReservationDialog);
   document.getElementById('visit-reserve-btn')?.addEventListener('click', openReservationDialog);
@@ -424,4 +425,282 @@ document.addEventListener('DOMContentLoaded', () => {
       closeReservationDialog();
     }
   });
+
+  // 7. Initialize Brew Companion & Roast Ticker
+  initBrewCompanion();
+  initRoastTicker();
 });
+
+// ==========================================================================
+// 8. Live Roast Countdown Ticker Engine
+// ==========================================================================
+function initRoastTicker() {
+  const countdownEl = document.getElementById('roast-countdown-val');
+  if (!countdownEl) return;
+
+  function updateRoastCountdown() {
+    const now = new Date();
+    // Next Wednesday 9:00 AM
+    const nextWed = new Date(now);
+    const day = now.getDay();
+    const diffDays = (3 - day + 7) % 7 || (now.getHours() >= 9 ? 7 : 0);
+    nextWed.setDate(now.getDate() + diffDays);
+    nextWed.setHours(9, 0, 0, 0);
+
+    const diffMs = nextWed - now;
+    if (diffMs <= 0) {
+      countdownEl.textContent = 'Roasting Now in Banani!';
+      return;
+    }
+
+    const d = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diffMs / (1000 * 60)) % 60);
+
+    countdownEl.textContent = `${String(d).padStart(2, '0')}d : ${String(h).padStart(2, '0')}h : ${String(m).padStart(2, '0')}m`;
+  }
+
+  updateRoastCountdown();
+  setInterval(updateRoastCountdown, 30000);
+}
+
+// ==========================================================================
+// 9. Interactive Specialty Brew Companion & Ratio Calculator
+// ==========================================================================
+const BREW_PROFILES = {
+  v60: {
+    name: 'Hario V60',
+    ratio: 16,
+    grind: 'Medium-Fine',
+    grindSub: 'Table salt texture',
+    temp: '94°C (Off boil)',
+    totalSecs: 165,
+    targetDisplay: '2:45 min',
+    steps: [
+      {
+        name: 'Bloom Phase',
+        desc: (d, w) => `Pour ${Math.round(d * 3)}g water in gentle spirals. Let the fresh coffee bloom and release aroma.`,
+        endSec: 45
+      },
+      {
+        name: 'First Steady Pour',
+        desc: (d, w) => `Pour continuous spiral up to ${Math.round(w * 0.6)}g. Keep flow gentle, avoiding paper walls.`,
+        endSec: 90
+      },
+      {
+        name: 'Final Drawdown',
+        desc: (d, w) => `Pour remainder to ${w}g. Give a gentle swirl and let gravity draw down clear coffee.`,
+        endSec: 165
+      }
+    ]
+  },
+  aeropress: {
+    name: 'AeroPress',
+    ratio: 12,
+    grind: 'Fine-Medium',
+    grindSub: 'Fine sand texture',
+    temp: '88°C (Sweet extraction)',
+    totalSecs: 120,
+    targetDisplay: '2:00 min',
+    steps: [
+      {
+        name: 'Saturate & Stir',
+        desc: (d, w) => `Pour all ${w}g water. Stir paddle gently 5 times to thoroughly saturate grounds.`,
+        endSec: 30
+      },
+      {
+        name: 'Gentle Steeping',
+        desc: () => `Insert plunger slightly to create a vacuum seal. Let coffee steep undisturbed.`,
+        endSec: 90
+      },
+      {
+        name: 'Steady Plunge',
+        desc: () => `Press plunger downward smoothly over 30 seconds until you hear a soft hiss.`,
+        endSec: 120
+      }
+    ]
+  },
+  frenchpress: {
+    name: 'French Press',
+    ratio: 15,
+    grind: 'Coarse',
+    grindSub: 'Sea salt texture',
+    temp: '95°C (Bold infusion)',
+    totalSecs: 240,
+    targetDisplay: '4:00 min',
+    steps: [
+      {
+        name: 'Saturation & Crust',
+        desc: (d, w) => `Pour all ${w}g water vigorously. Allow a rich coffee crust to form on the surface.`,
+        endSec: 60
+      },
+      {
+        name: 'Break Crust & Steep',
+        desc: () => `Gently stir crust 3 times with spoon. Scoop away top foam for an ultra-clean body.`,
+        endSec: 210
+      },
+      {
+        name: 'Slow Plunge & Pour',
+        desc: () => `Insert filter screen and press down slowly. Pour immediately to stop extraction.`,
+        endSec: 240
+      }
+    ]
+  }
+};
+
+function initBrewCompanion() {
+  const methodBtns = document.querySelectorAll('.brew-method-btn');
+  const doseSlider = document.getElementById('coffee-dose-slider');
+  const doseDisplay = document.getElementById('dose-val-display');
+  const waterDisplay = document.getElementById('water-amount-display');
+  const grindDisplay = document.getElementById('grind-size-display');
+  const targetTimeDisplay = document.getElementById('target-time-display');
+
+  const timerClock = document.getElementById('brew-timer-clock');
+  const stageName = document.getElementById('brew-stage-name');
+  const stageInst = document.getElementById('brew-stage-instruction');
+  const progressBar = document.getElementById('brew-progress-bar');
+  const startBtn = document.getElementById('brew-start-btn');
+  const resetBtn = document.getElementById('brew-reset-btn');
+  const stepChips = document.querySelectorAll('.step-chip');
+
+  if (!doseSlider || !startBtn) return;
+
+  let activeMethodKey = 'v60';
+  let activeDose = 18;
+  let elapsedSecs = 0;
+  let timerInterval = null;
+  let isRunning = false;
+
+  function updateRecipeMetrics() {
+    const profile = BREW_PROFILES[activeMethodKey];
+    const waterAmount = Math.round(activeDose * profile.ratio);
+
+    doseDisplay.textContent = `${activeDose} g`;
+    waterDisplay.textContent = `${waterAmount} ml`;
+    grindDisplay.textContent = profile.grind;
+    targetTimeDisplay.textContent = profile.targetDisplay;
+
+    // Update step chip labels dynamically with dose/water
+    profile.steps.forEach((step, idx) => {
+      const chip = stepChips[idx];
+      if (chip) {
+        const strong = chip.querySelector('.step-details strong');
+        const span = chip.querySelector('.step-details span');
+        if (strong) strong.textContent = step.name;
+        if (span) {
+          const prevSec = idx === 0 ? 0 : profile.steps[idx - 1].endSec;
+          const prevMin = `${Math.floor(prevSec / 60)}:${String(prevSec % 60).padStart(2, '0')}`;
+          const endMin = `${Math.floor(step.endSec / 60)}:${String(step.endSec % 60).padStart(2, '0')}`;
+          span.textContent = `${prevMin} - ${endMin}`;
+        }
+      }
+    });
+
+    if (!isRunning && elapsedSecs === 0) {
+      stageName.textContent = 'Ready to Bloom';
+      stageInst.textContent = `Rinse filter with hot water, add ${activeDose}g coffee into your dripper, zero your scale, and press Start Brew.`;
+    }
+  }
+
+  // Method Button Switching
+  methodBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      methodBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      activeMethodKey = btn.dataset.method;
+      resetTimer();
+      updateRecipeMetrics();
+    });
+  });
+
+  // Dose Slider
+  doseSlider.addEventListener('input', (e) => {
+    activeDose = parseInt(e.target.value, 10);
+    updateRecipeMetrics();
+  });
+
+  function formatTime(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+  }
+
+  function tick() {
+    elapsedSecs++;
+    timerClock.textContent = formatTime(elapsedSecs);
+
+    const profile = BREW_PROFILES[activeMethodKey];
+    const waterAmount = Math.round(activeDose * profile.ratio);
+    const pct = Math.min(100, Math.round((elapsedSecs / profile.totalSecs) * 100));
+    progressBar.style.width = `${pct}%`;
+
+    // Find current active step
+    let currentStepIdx = profile.steps.findIndex(step => elapsedSecs <= step.endSec);
+    if (currentStepIdx === -1) currentStepIdx = profile.steps.length - 1;
+
+    stepChips.forEach((chip, idx) => {
+      chip.classList.toggle('active', idx === currentStepIdx);
+      chip.classList.toggle('completed', idx < currentStepIdx);
+    });
+
+    const currentStep = profile.steps[currentStepIdx];
+    stageName.textContent = currentStep.name;
+    stageInst.textContent = currentStep.desc(activeDose, waterAmount);
+
+    if (elapsedSecs >= profile.totalSecs) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      isRunning = false;
+      startBtn.innerHTML = '<span>Brew Complete</span> <span>☕</span>';
+      startBtn.disabled = true;
+      stageName.textContent = 'Extraction Complete!';
+      stageInst.textContent = 'Remove dripper, give your cup a swirl to blend, and enjoy your artisanal brew!';
+      showToast('Your artisanal brew is complete! Enjoy the rich aromas.', '☕');
+    }
+  }
+
+  function startTimer() {
+    if (isRunning) {
+      // Pause
+      clearInterval(timerInterval);
+      timerInterval = null;
+      isRunning = false;
+      startBtn.innerHTML = '<span>Resume Brew</span> <span>▶</span>';
+    } else {
+      // Start/Resume
+      isRunning = true;
+      resetBtn.disabled = false;
+      startBtn.innerHTML = '<span>Pause Brew</span> <span>⏸</span>';
+      timerInterval = setInterval(tick, 1000);
+    }
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    isRunning = false;
+    elapsedSecs = 0;
+    timerClock.textContent = '00:00';
+    progressBar.style.width = '0%';
+    startBtn.innerHTML = '<span>Start Brew</span> <span>▶</span>';
+    startBtn.disabled = false;
+    resetBtn.disabled = true;
+
+    stepChips.forEach((chip, idx) => {
+      chip.classList.toggle('active', idx === 0);
+      chip.classList.remove('completed');
+    });
+
+    updateRecipeMetrics();
+  }
+
+  startBtn.addEventListener('click', startTimer);
+  resetBtn.addEventListener('click', resetTimer);
+
+  updateRecipeMetrics();
+}

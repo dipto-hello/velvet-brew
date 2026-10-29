@@ -9,10 +9,10 @@
 
   // 1. Asset Configuration (High-Efficiency Next-Gen WebP with Instant JPG Fallback)
   const SCENE_ASSETS = [
-    { id: 1, title: 'Roast', src: 'assets/images/cinema-01-beans.webp', fallback: 'assets/images/cinema-01-beans.jpg' },
-    { id: 2, title: 'Bloom', src: 'assets/images/cinema-02-bloom.webp', fallback: 'assets/images/cinema-02-bloom.jpg' },
-    { id: 3, title: 'Hearth', src: 'assets/images/cinema-03-hearth.webp', fallback: 'assets/images/cinema-03-hearth.jpg' },
-    { id: 4, title: 'Sanctuary', src: 'assets/images/cinema-04-sanctuary.webp', fallback: 'assets/images/cinema-04-sanctuary.jpg' }
+    { id: 1, title: 'Roast', src: 'assets/images/cinema-01-beans.webp?v=32', fallback: 'assets/images/cinema-01-beans.jpg?v=32' },
+    { id: 2, title: 'Bloom', src: 'assets/images/cinema-02-bloom.webp?v=32', fallback: 'assets/images/cinema-02-bloom.jpg?v=32' },
+    { id: 3, title: 'Hearth', src: 'assets/images/cinema-03-hearth.webp?v=32', fallback: 'assets/images/cinema-03-hearth.jpg?v=32' },
+    { id: 4, title: 'Sanctuary', src: 'assets/images/cinema-04-sanctuary.webp?v=32', fallback: 'assets/images/cinema-04-sanctuary.jpg?v=32' }
   ];
 
   // 2. Engine State

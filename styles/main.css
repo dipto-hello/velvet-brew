@@ -1577,3 +1577,384 @@ button, input, select {
   transform: translateY(10px);
   transition: all 0.3s ease;
 }
+
+/* ==========================================================================
+   Live Small-Batch Roast Ticker Bar
+   ========================================================================== */
+.roast-ticker-bar {
+  background: linear-gradient(90deg, #120D0A 0%, #1D1510 50%, #120D0A 100%);
+  border-top: 1px solid rgba(212, 141, 59, 0.28);
+  border-bottom: 1px solid rgba(212, 141, 59, 0.28);
+  padding: 12px 20px;
+  color: #FAF6F0;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  position: relative;
+  z-index: 10;
+}
+
+.roast-ticker-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.ticker-flame {
+  font-size: 1.1rem;
+}
+
+.ticker-pill {
+  background: rgba(212, 141, 59, 0.16);
+  border: 1px solid rgba(212, 141, 59, 0.45);
+  color: #E29B47;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   Interactive Specialty Brew Companion Section
+   ========================================================================== */
+.brew-companion-section {
+  padding: 100px 0;
+  background-color: #0E0A08;
+  position: relative;
+  border-top: 1px solid rgba(212, 141, 59, 0.2);
+  border-bottom: 1px solid rgba(212, 141, 59, 0.2);
+}
+
+.brew-card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  margin-top: 48px;
+}
+
+@media (max-width: 900px) {
+  .brew-card-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.brew-controls-panel,
+.brew-timer-panel {
+  background: rgba(23, 17, 13, 0.95);
+  border: 1px solid rgba(212, 141, 59, 0.25);
+  border-radius: 20px;
+  padding: clamp(24px, 3.5vw, 40px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+.panel-subtitle {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #FAF6F0;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+/* Brew Method Selector */
+.brew-method-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 500px) {
+  .brew-method-selector {
+    grid-template-columns: 1fr;
+  }
+}
+
+.brew-method-btn {
+  background: rgba(14, 10, 8, 0.85);
+  border: 1.5px solid rgba(212, 141, 59, 0.25);
+  border-radius: 12px;
+  padding: 16px 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.brew-method-btn:hover {
+  border-color: rgba(212, 141, 59, 0.6);
+  background: rgba(212, 141, 59, 0.08);
+}
+
+.brew-method-btn.active {
+  border-color: #D48D3B;
+  background: rgba(212, 141, 59, 0.16);
+  box-shadow: 0 0 16px rgba(212, 141, 59, 0.25);
+}
+
+.brew-method-btn .method-icon {
+  font-size: 1.5rem;
+}
+
+.brew-method-btn .method-name {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #FAF6F0;
+}
+
+.brew-method-btn .method-sub {
+  font-size: 0.72rem;
+  color: rgba(250, 246, 240, 0.65);
+}
+
+/* Dose Slider */
+.dose-control-group {
+  margin-top: 32px;
+}
+
+.dose-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.dose-display-badge {
+  background: linear-gradient(135deg, #D48D3B 0%, #B67123 100%);
+  color: #16100C;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  font-variant-numeric: tabular-nums;
+}
+
+.custom-range {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(250, 246, 240, 0.15);
+  outline: none;
+  accent-color: #D48D3B;
+  cursor: pointer;
+}
+
+.dose-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: rgba(250, 246, 240, 0.6);
+}
+
+/* Recipe Metrics Grid */
+.brew-recipe-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 32px;
+}
+
+@media (max-width: 500px) {
+  .brew-recipe-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metric-box {
+  background: rgba(14, 10, 8, 0.75);
+  border: 1px solid rgba(212, 141, 59, 0.2);
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(250, 246, 240, 0.6);
+  font-weight: 600;
+}
+
+.metric-num {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #D48D3B;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-sub {
+  font-size: 0.7rem;
+  color: rgba(250, 246, 240, 0.5);
+}
+
+/* Brew Timer Panel */
+.brew-timer-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.timer-display-ring {
+  background: rgba(14, 10, 8, 0.9);
+  border: 2px solid rgba(212, 141, 59, 0.35);
+  border-radius: 18px;
+  padding: 32px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.timer-digits {
+  font-family: var(--font-serif);
+  font-size: 4rem;
+  font-weight: 700;
+  color: #FAF6F0;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 20px rgba(212, 141, 59, 0.3);
+}
+
+.timer-stage-title {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #E29B47;
+  margin-top: 12px;
+}
+
+.timer-stage-instruction {
+  font-size: 0.9rem;
+  color: rgba(250, 246, 240, 0.8);
+  margin-top: 8px;
+  min-height: 44px;
+  line-height: 1.45;
+}
+
+.timer-progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(250, 246, 240, 0.12);
+  border-radius: 3px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.timer-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #D48D3B 0%, #F5C27D 100%);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.timer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.brew-steps-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.step-chip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px;
+  background: rgba(14, 10, 8, 0.6);
+  border: 1px solid rgba(250, 246, 240, 0.1);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.step-chip.active {
+  border-color: #D48D3B;
+  background: rgba(212, 141, 59, 0.12);
+}
+
+.step-chip.completed {
+  opacity: 0.6;
+  border-color: rgba(46, 204, 113, 0.4);
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(212, 141, 59, 0.2);
+  color: #E29B47;
+  font-weight: 700;
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-chip.active .step-num {
+  background: #D48D3B;
+  color: #16100C;
+}
+
+.step-details {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+}
+
+.step-details strong {
+  color: #FAF6F0;
+  font-weight: 600;
+}
+
+.step-details span {
+  color: rgba(250, 246, 240, 0.65);
+  font-size: 0.78rem;
+}
+
+/* ==========================================================================
+   Mobile Header Cleanup (No Cramming)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .site-header .brand-sub {
+    display: none !important;
+  }
+  .site-header .brand-name {
+    font-size: 1.2rem;
+  }
+  .site-header .nav-btn-text {
+    display: none !important;
+  }
+  .site-header #nav-reserve-btn {
+    padding: 8px 12px;
+  }
+  .site-header .cart-label {
+    display: none !important;
+  }
+  .site-header .cart-trigger-btn {
+    padding: 8px 12px;
+  }
+  .site-header .nav-actions {
+    gap: 8px;
+  }
+}
