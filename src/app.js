@@ -108,6 +108,7 @@ class CartState {
     this.items.forEach(item => {
       const row = document.createElement('div');
       row.className = 'cart-item';
+      row.setAttribute('data-item-id', item.id);
 
       const left = document.createElement('div');
       const title = document.createElement('div');
@@ -128,6 +129,9 @@ class CartState {
       minusBtn.className = 'qty-btn';
       minusBtn.textContent = '−';
       minusBtn.title = 'Decrease quantity';
+      minusBtn.setAttribute('data-action', 'decrement');
+      minusBtn.setAttribute('data-item-id', item.id);
+      minusBtn.setAttribute('aria-label', `Decrease ${item.name} quantity`);
       minusBtn.addEventListener('click', () => this.updateQuantity(item.id, -1));
 
       const num = document.createElement('span');
@@ -138,6 +142,9 @@ class CartState {
       plusBtn.className = 'qty-btn';
       plusBtn.textContent = '+';
       plusBtn.title = 'Increase quantity';
+      plusBtn.setAttribute('data-action', 'increment');
+      plusBtn.setAttribute('data-item-id', item.id);
+      plusBtn.setAttribute('aria-label', `Increase ${item.name} quantity`);
       plusBtn.addEventListener('click', () => this.updateQuantity(item.id, 1));
 
       ctrls.appendChild(minusBtn);
