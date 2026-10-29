@@ -15,8 +15,9 @@ async function runAudit() {
   });
 
   // 1. Navigate to local server
-  await page.goto('http://localhost:3458/?audit=' + Date.now());
-  console.log('✓ Successfully loaded http://localhost:3458');
+  const port = process.env.PORT || 3000;
+  await page.goto(`http://localhost:${port}/?audit=` + Date.now());
+  console.log(`✓ Successfully loaded http://localhost:${port}`);
 
   // 2. Verify Title and Header
   const title = await page.title();

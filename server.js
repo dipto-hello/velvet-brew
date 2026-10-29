@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PORT = 3458;
+const PORT = process.env.PORT || 3000;
 
 const MIME = {
   '.html': 'text/html',
@@ -45,5 +45,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`L'Aroma Cafe running at http://localhost:${PORT}`);
+  console.log(`Velvet Brew running at http://localhost:${PORT}`);
 });
