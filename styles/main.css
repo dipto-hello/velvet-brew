@@ -698,6 +698,68 @@ button, input, select {
   box-shadow: 0 2px 8px rgba(212, 141, 59, 0.25);
 }
 
+/* Mobile-Optimized Horizontal Scrollable Filter Rails & Table Layout */
+@media (max-width: 768px) {
+  .menu-tabs-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    padding: 6px 16px 12px 16px;
+    gap: 10px;
+    margin-bottom: 14px;
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+  .menu-tabs-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .menu-tab {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+  }
+  .dietary-filter-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 4px 16px 12px 16px;
+    gap: 8px;
+    margin-bottom: 24px;
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+  .dietary-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-label {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.75rem;
+  }
+  .diet-chip {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 5px 12px;
+    font-size: 0.76rem;
+  }
+  .hours-row {
+    font-size: 0.88rem;
+    gap: 12px;
+  }
+  .hours-row span:last-child {
+    white-space: nowrap;
+    text-align: right;
+  }
+}
+
 /* Menu Grid */
 .menu-grid {
   display: grid;

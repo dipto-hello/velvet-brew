@@ -98,14 +98,16 @@
   }
 
   /**
-   * Resize Canvas with devicePixelRatio Capped at 2 for Maximum GPU Efficiency
+   * Resize Canvas with devicePixelRatio Capped at 1 on Mobile (4x Fillrate Boost) and 1.5 on Desktop
    */
   function resizeCanvas() {
     if (!canvas || !ctx) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
     canvas.width = Math.round(window.innerWidth * dpr);
     canvas.height = Math.round(window.innerHeight * dpr);
     ctx.scale(dpr, dpr);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = isMobile ? 'medium' : 'high';
   }
 
   function onResize() {
@@ -220,7 +222,7 @@
   }
 
   /**
-   * Master 60 FPS Render Loop (Zero Overhead When Offscreen)
+   * Master 60 FPS Render Loop (Zero Overhead When Offscreen or Idle on Mobile)
    */
   function renderLoop() {
     if (!isIntersecting) {
@@ -233,17 +235,21 @@
       isLoopRunning = false;
       return;
     }
-    // Responsive Kinetic Lerp (0.16 gives instant pickup without lag)
+    // Responsive Kinetic Lerp (Higher on mobile for direct touch responsiveness)
     const diff = state.targetProgress - state.currentProgress;
+    let isSettled = false;
     if (Math.abs(diff) < 0.0004) {
       state.currentProgress = state.targetProgress;
+      isSettled = true;
     } else {
-      state.currentProgress += diff * 0.16;
+      state.currentProgress += diff * (isMobile ? 0.30 : 0.16);
     }
 
-    // Mouse tilt lerp
-    state.tiltX += (state.targetTiltX - state.tiltX) * 0.08;
-    state.tiltY += (state.targetTiltY - state.tiltY) * 0.08;
+    // Mouse tilt lerp (Desktop only)
+    if (!isMobile) {
+      state.tiltX += (state.targetTiltX - state.tiltX) * 0.08;
+      state.tiltY += (state.targetTiltY - state.tiltY) * 0.08;
+    }
 
     const p = state.currentProgress;
     const w = window.innerWidth;
@@ -324,7 +330,7 @@
         drawCoverImage(img4, alpha4, scale4, focalX4, focalY4, state.tiltX, state.tiltY);
       }
 
-      // High-Performance Ambient Embers (Clean GPU path, zero shadowBlur)
+      // High-Performance Ambient Embers (Desktop only, bypass on mobile/reduced motion)
       for (let i = 0; i < particles.length; i++) {
         const pt = particles[i];
         pt.y += pt.speedY * 0.002;
@@ -345,6 +351,12 @@
 
     // Update DOM indicators efficiently
     syncDOMState(p);
+
+    // Sleep RAF loop on mobile when scroll is settled and no particles are running
+    if (isSettled && particles.length === 0) {
+      isLoopRunning = false;
+      return;
+    }
 
     requestAnimationFrame(renderLoop);
   }
