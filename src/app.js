@@ -423,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const guests = document.getElementById('res-guests').value;
     const area = document.getElementById('res-area').value;
 
-    showToast(`Table booked for ${name}! Party of ${guests} on ${date} at ${time} (${area}).`, '🥂');
+    showToast(`Reservation noted: Table for ${name} (${guests} guests) on ${date} at ${time}. Demo setup — to confirm at Road 11, call +880 1711-835838.`, '🥂');
     closeReservationDialog();
     e.target.reset();
   });

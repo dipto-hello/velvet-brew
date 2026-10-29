@@ -37,8 +37,13 @@
   let telemetryFill = null;
   let siteHeader = null;
 
-  // Optimized Particle Field (Zero shadowBlur overhead)
-  const particles = Array.from({ length: 32 }, () => ({
+  // Accessibility & Device Capability Check
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || 'ontouchstart' in window);
+
+  // Optimized Particle Field (Zero overhead on reduced-motion or low-power mobile, 20 light particles on desktop)
+  const particleCount = (prefersReducedMotion || isMobile) ? 0 : 20;
+  const particles = Array.from({ length: particleCount }, () => ({
     x: Math.random(),
     y: Math.random(),
     size: Math.random() * 2.0 + 0.8,
@@ -392,13 +397,15 @@
     window.addEventListener('scroll', updateScrollProgress, { passive: true });
     updateScrollProgress();
 
-    // Mouse Parallax Tracker
-    window.addEventListener('mousemove', (e) => {
-      const halfW = window.innerWidth * 0.5;
-      const halfH = window.innerHeight * 0.5;
-      state.targetTiltX = (e.clientX - halfW) / halfW;
-      state.targetTiltY = (e.clientY - halfH) / halfH;
-    }, { passive: true });
+    // Mouse Parallax Tracker (Desktop & motion-allowed only)
+    if (!prefersReducedMotion && !isMobile) {
+      window.addEventListener('mousemove', (e) => {
+        const halfW = window.innerWidth * 0.5;
+        const halfH = window.innerHeight * 0.5;
+        state.targetTiltX = (e.clientX - halfW) / halfW;
+        state.targetTiltY = (e.clientY - halfH) / halfH;
+      }, { passive: true });
+    }
 
     // Telemetry Node Click Navigation
     telemetryNodes.forEach((node) => {
